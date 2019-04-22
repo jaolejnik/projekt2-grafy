@@ -1,42 +1,37 @@
-//
-// Created by Kuba on 20.04.2019.
-//
-
 #include "../inc/helper_func.hh"
 
+int myRandom (int i) {return std::rand()%i;}
 
-int * getRandVertices(int n)
+int * getRandNodes(int nodes_amount)
 {
-    int * arr = new int[n];
+    int * arr = new int[nodes_amount];
 
-    random_device rd;
-    mt19937 mt(rd());
-    uniform_int_distribution<int> distribution(0,n);
+    for (int i = 0; i < nodes_amount; i++)
+      arr[i] = i;
 
-    for (int i = 0; i < n; i++)
-        arr[i] = distribution(mt);
+    std::random_shuffle(&arr[0], &arr[nodes_amount],myRandom);
 
     return arr;
 }
 
-Edge * getRandEdges(int const vertices[])
+
+Edge * getRandEdges(int nodes[], int edges_amount, int nodes_amount)
 {
-    int n = sizeof(vertices)/sizeof(vertices[0]);
+    std::random_device rd;
+    std::mt19937 mt(rd());
+    std::uniform_int_distribution<int> distribution(-edges_amount, edges_amount);
 
-    random_device rd;
-    mt19937 mt(rd());
-    uniform_int_distribution<int> distribution(n,n+5);
-    // TODO
-    // TUTAJ SKONCZYLES
-    Edge * edges = new Edge[n];
+    Edge * edges = new Edge[edges_amount];
 
-    for (int i = 0; i < n; i++)
+    for (int i = 0; i < edges_amount; i++)
     {
-        edges[i].source = distribution(mt);
-        edges[i].destination = distribution(mt);
-        edges[i].weight = distribution(mt);
+        edges[i].source = nodes[rand() % nodes_amount];
+        edges[i].destination = nodes[rand() % nodes_amount];
+        do{
+          edges[i].weight = distribution(mt);
+        }while(edges[i].weight == 0);
+
     }
 
     return edges;
 }
-
