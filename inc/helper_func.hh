@@ -5,10 +5,11 @@
 #include <algorithm>    //  std::random_shuffle
 #include <ctime>        //  std::time
 #include <cstdlib>      //  std::rand, std::srand
-#include "../inc/noe.hh"
+#include "noe.hh"
 
-int * getRandNodes(int n);
+std::unique_ptr<int[]> getRandNodes(int n);
 
-Edge * getRandEdges(int nodes[], int edges_amount, int nodes_amount);
+//  unique_ptr passed by reference, otherwise that passed value would become null
+std::unique_ptr<Edge[]> getRandEdges(std::unique_ptr<int[]> & nodes, int edges_amount, int nodes_amount);
 
 #endif //PROJEKT2_GRAFY_HELPER_FUNC_HH

@@ -1,28 +1,28 @@
-#ifndef PROJEKT2_GRAFY_MY_GRAPH_HH
-#define PROJEKT2_GRAFY_MY_GRAPH_HH
+#ifndef PROJEKT2_GRAFY_GRAPHLIST_HH
+#define PROJEKT2_GRAFY_GRAPHLIST_HH
 
-#include <iostream>
-#include "../inc/noe.hh"
+#include "noe.hh"
 
 class GraphList
 {
     Node * getAdjListNode(int val, int weight, Node * head);
 
-    bool is_list;
     int nodes_amount, edges_amount;
+    Node **head;
 
 public:
 
-    Node **head;
-
     // constructor
-    GraphList(Edge edges[], int edges_amount, int nodes_amount);
-
+    GraphList(std::unique_ptr<Edge[]> & edges, int edges_amount, int nodes_amount);
     // destructor
     ~GraphList();
 
     void showAdjNodes(int i);
     void showGraph();
+    int getNodesAmount() {return nodes_amount;}
+    int getEdgesAmount() {return edges_amount;}
+    Node * getHead(int i) {return head[i];}
+
 };
 
-#endif //PROJEKT2_GRAFY_MY_GRAPH_HH
+#endif //PROJEKT2_GRAFY_GRAPHLIST_HH

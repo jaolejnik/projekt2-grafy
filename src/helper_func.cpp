@@ -1,37 +1,39 @@
 #include "../inc/helper_func.hh"
 
+//  Simple random number generator
 int myRandom (int i) {return std::rand()%i;}
 
-int * getRandNodes(int nodes_amount)
+//  Creates an array of gives size and fills it with values
+//  that correspond to it's indexes, then shuffles the array randomly
+std::unique_ptr<int[]> getRandNodes(int nodes_amount)
 {
-    int * arr = new int[nodes_amount];
+    std::unique_ptr<int[]> rand_nodes(new int[nodes_amount]);
 
     for (int i = 0; i < nodes_amount; i++)
-      arr[i] = i;
+        rand_nodes[i] = i;
 
-    std::random_shuffle(&arr[0], &arr[nodes_amount],myRandom);
+    std::random_shuffle(&rand_nodes[0], &rand_nodes[nodes_amount],myRandom);
 
-    return arr;
+    return rand_nodes;
 }
 
-
-Edge * getRandEdges(int nodes[], int edges_amount, int nodes_amount)
+//  Creates
+std::unique_ptr<Edge[]> getRandEdges(std::unique_ptr<int[]> & nodes, int edges_amount, int nodes_amount)
 {
     std::random_device rd;
     std::mt19937 mt(rd());
     std::uniform_int_distribution<int> distribution(-edges_amount, edges_amount);
 
-    Edge * edges = new Edge[edges_amount];
+    std::unique_ptr<Edge[]> rand_edges(new Edge[edges_amount]);
 
     for (int i = 0; i < edges_amount; i++)
     {
-        edges[i].source = nodes[rand() % nodes_amount];
-        edges[i].destination = nodes[rand() % nodes_amount];
+        rand_edges[i].source = nodes[rand() % nodes_amount];
+        rand_edges[i].destination = nodes[rand() % nodes_amount];
         do{
-          edges[i].weight = distribution(mt);
-        }while(edges[i].weight == 0);
-
+            rand_edges[i].weight = distribution(mt);
+        }while(rand_edges[i].weight == 0);
     }
 
-    return edges;
+    return rand_edges;
 }
