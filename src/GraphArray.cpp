@@ -57,4 +57,5 @@ void GraphArray::showGraph()
     std::cout << "ARRAY:" << std::endl;
     for (int i = 0; i < nodes_amount; i++)
         this->showAdjNodes(i);
+    std::cout << std::endl;
 }

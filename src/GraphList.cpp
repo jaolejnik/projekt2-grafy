@@ -59,4 +59,5 @@ void GraphList::showGraph()
     std::cout << "LIST:" << std::endl;
     for (int i = 0; i < this->nodes_amount; i++)
         this->showAdjNodes(i);
+    std::cout << std::endl;
 }

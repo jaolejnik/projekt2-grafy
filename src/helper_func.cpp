@@ -22,7 +22,7 @@ std::unique_ptr<Edge[]> getRandEdges(std::unique_ptr<int[]> & nodes, int edges_a
 {
     std::random_device rd;
     std::mt19937 mt(rd());
-    std::uniform_int_distribution<int> distribution(-edges_amount, edges_amount);
+    std::uniform_int_distribution<int> distribution(-nodes_amount/2, nodes_amount);
 
     std::unique_ptr<Edge[]> rand_edges(new Edge[edges_amount]);
 
