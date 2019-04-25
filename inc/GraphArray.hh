@@ -5,7 +5,8 @@
 
 class GraphArray
 {
-    int ** adj_matrix;
+    int countPairs(std::unique_ptr<Edge[]> & edges);
+    int *** adj_matrix;
     int nodes_amount, edges_amount;
 
 public:

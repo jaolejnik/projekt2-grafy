@@ -22,8 +22,6 @@ int main()
 
     std::unique_ptr<Edge[]> edge (new Edge[8]);
 
-
-
     GraphList graphL(edges, EDGES_AMOUNT, NODES_AMOUNT[0]);
     //GraphArray graphA(edges, EDGES_AMOUNT, NODES_AMOUNT[0]);
 
