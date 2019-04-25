@@ -16,20 +16,18 @@ int main()
     std::srand (unsigned ( std::time(0) ) );
 
     std::unique_ptr<int[]> values_of_nodes = getRandNodes(NODES_AMOUNT[0]);
-    //cout << values_of_nodes[0] << endl;
 
     std::unique_ptr<Edge[]> edges = getRandEdges(values_of_nodes, EDGES_AMOUNT, NODES_AMOUNT[0]);
 
     std::unique_ptr<Edge[]> edge (new Edge[8]);
 
     GraphList graphL(edges, EDGES_AMOUNT, NODES_AMOUNT[0]);
-    //GraphArray graphA(edges, EDGES_AMOUNT, NODES_AMOUNT[0]);
+    GraphArray graphA(edges, EDGES_AMOUNT, NODES_AMOUNT[0]);
 
     graphL.showGraph();
-    //graphA.showGraph();
-    //graphA.showAdjMatrix();
+    graphA.showGraph();
 
-    BellmanFord(&graphL,0);
+    //BellmanFord(&graphL,0);
     return 0;
 }
 /*
