@@ -1,9 +1,9 @@
-#include "../inc/helper_func.hh"
+#include "../inc/HelperFunc.hh"
 
 //  Simple random number generator
 int myRandom (int i) {return std::rand()%i;}
 
-//  Creates an array of gives size and fills it with values
+//  Creates an array of given size and fills it with values
 //  that correspond to it's indexes, then shuffles the array randomly
 std::unique_ptr<int[]> getRandNodes(int nodes_amount)
 {
@@ -17,12 +17,12 @@ std::unique_ptr<int[]> getRandNodes(int nodes_amount)
     return rand_nodes;
 }
 
-//  Creates
+//  Creates an array of random edges and then returns it
 std::unique_ptr<Edge[]> getRandEdges(std::unique_ptr<int[]> & nodes, int edges_amount, int nodes_amount)
 {
     std::random_device rd;
     std::mt19937 mt(rd());
-    std::uniform_int_distribution<int> distribution(-nodes_amount/2, nodes_amount);
+    std::uniform_int_distribution<int> distribution(-3, nodes_amount);
 
     std::unique_ptr<Edge[]> rand_edges(new Edge[edges_amount]);
 
@@ -37,3 +37,5 @@ std::unique_ptr<Edge[]> getRandEdges(std::unique_ptr<int[]> & nodes, int edges_a
 
     return rand_edges;
 }
+
+

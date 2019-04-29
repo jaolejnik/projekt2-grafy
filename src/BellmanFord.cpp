@@ -1,7 +1,7 @@
 #include "../inc/BellmanFord.hh"
 
 
-void showResults(int distance[], int source, int n)
+void showResults(std::unique_ptr<int[]> &distance, int source, int n)
 {
     std::cout << std::endl;
     std::cout << "Node   Distance from (" << source << ")" << std::endl;
@@ -18,10 +18,11 @@ void showResults(int distance[], int source, int n)
     std::cout << std::endl;
 }
 
-void BellmanFord(GraphList *graph, int source)
+std::unique_ptr<int[]> BellmanFord(GraphList *graph, int source)
 {
     int V = graph->getNodesAmount();
-    int * distance = new int[V];
+    std::unique_ptr<int[]> distance(new int[V]);
+    int * predecessor = new int[V];
 
     for (int i = 0; i < V; i++)
         distance[i] = INT32_MAX; // INF
@@ -39,7 +40,11 @@ void BellmanFord(GraphList *graph, int source)
                 int weight = head_ptr->cost;
 
                 if (distance[src] != INT32_MAX && distance[src] + weight < distance[dest])
+                {
                     distance[dest] = distance[src] + weight;
+                    predecessor[dest] = src;
+                }
+
 
                 head_ptr = head_ptr->next;
             }
@@ -58,13 +63,70 @@ void BellmanFord(GraphList *graph, int source)
             if (distance[src] != INT32_MAX && distance[src] + weight < distance[dest])
                 distance[dest] = INT32_MIN;
 
-
-
             head_ptr = head_ptr->next;
+        }
+    }
+    showResults(distance, source, V);
+    
+    return distance;
+}
+
+std::unique_ptr<int[]> BellmanFord(GraphArray *graph, int source)
+{
+    int V = graph->getNodesAmount();
+    std::unique_ptr<int[]> distance(new int[V]);
+    //std::unique_ptr<Path[]> distance(new Path[V]);
+
+    for (int i = 0; i < V; i++)
+        distance[i] = INT32_MAX; // INF
+    distance[source] = 0;
+
+    int *** adj_mat = graph->getAdjMatrix();
+
+    for (int a = 1; a <= V-1; a++)
+    {
+        for(int i = 0; i < V; i++)
+        {
+            for (int j = 0; j < V; j++)
+            {
+                int k = 0;
+                while (adj_mat[i][j][k] != 0)
+                {
+                    int src = i;
+                    int dest = j;
+                    int weight = adj_mat[i][j][k];
+
+                    if (distance[src] != INT32_MAX && distance[src] + weight < distance[dest])
+                        distance[dest] = distance[src] + weight;
+
+                    k++;
+                }
+            }
+        }
+    }
+
+    for(int i = 0; i < V; i++)
+    {
+        for (int j = 0; j < V; j++)
+        {
+            int k = 0;
+            while (adj_mat[i][j][k] != 0)
+            {
+                int src = i;
+                int dest = j;
+                int weight = adj_mat[i][j][k];
+
+                if (distance[src] != INT32_MAX && distance[src] + weight < distance[dest])
+                    distance[dest] = INT32_MIN;
+
+                k++;
+            }
         }
     }
 
     showResults(distance, source, V);
-    delete [] distance;
+
+    return distance;
+
 }
 

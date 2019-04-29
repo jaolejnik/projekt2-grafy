@@ -18,6 +18,7 @@ public:
     void showGraph();
     int getNodesAmount() {return nodes_amount;}
     int getEdgesAmount() {return edges_amount;}
+    int *** getAdjMatrix() { return adj_matrix;}
 };
 
 #endif //PROJEKT2_GRAFY_GRAPHARRAY_HH

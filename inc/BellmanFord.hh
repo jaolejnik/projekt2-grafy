@@ -3,9 +3,16 @@
 
 #include "GraphList.hh"
 #include "GraphArray.hh"
+#include "MyList.hh"
 
-void showResults(int distance[], int source, int n);
-void BellmanFord(GraphList * graph, int source);
-void BellmanFord(GraphArray * graph, int source);
+struct Path
+{
+    int cost;
+    MyList visited_nodes;
+};
+
+void showResults(std::unique_ptr<int[]> &distance, int source, int n);
+std::unique_ptr<int[]> BellmanFord(GraphList * graph, int source);
+std::unique_ptr<int[]> BellmanFord(GraphArray * graph, int source);
 
 #endif //PROJEKT2_GRAFY_BELLMANFORD_HH

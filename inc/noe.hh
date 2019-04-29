@@ -16,4 +16,5 @@ struct Edge
     int source, destination, weight;
 };
 
+
 #endif //PROJEKT2_GRAFY_NOE_HH
