@@ -1,20 +1,33 @@
 #include "../inc/BellmanFord.hh"
 
 
-void showResults(std::unique_ptr<int[]> &distance, int source, int n)
+void showResults(std::unique_ptr<int[]> &distance, int * predecessor, int source, int n)
 {
     std::cout << std::endl;
-    std::cout << "Node   Distance from (" << source << ")" << std::endl;
+    std::cout << "Node\t\tDistance from (" << source << ")\t\tPath" << std::endl;
     for (int i = 0; i < n; i++)
     {
-        std::cout << i << "\t\t";
+        std::cout << i << "\t\t\t";
         if (distance[i] == INT32_MAX)
-            std::cout << "INF (not connected)" << std::endl;
+            std::cout << "INF (not connected)\t\t\t\t\t\t";
         else if (distance[i] == INT32_MIN)
-            std::cout << "-INF (negative cycle)" << std::endl;
+            std::cout << "-INF (negative cycle)\t\t\t\t\t\t";
+        else if (i == source)
+            std::cout << "SOURCE\t\t\t\t\t\t";
         else
-            std::cout << distance[i] << std::endl;
+            std::cout << distance[i] << "\t\t\t\t\t\t";
+
+        int current = i;
+        while (current != source && (distance[current] != INT32_MAX && distance[current] != INT32_MIN) )
+        {
+            std::cout << "("<< current << ")<-";
+            current = predecessor[current];
+        }
+        if (distance[i] != INT32_MAX && distance[i] != INT32_MIN)
+            std::cout << "(" << source << ")";
+        std::cout << std::endl;
     }
+
     std::cout << std::endl;
 }
 
@@ -22,8 +35,7 @@ std::unique_ptr<int[]> BellmanFord(GraphList *graph, int source)
 {
     int V = graph->getNodesAmount();
     std::unique_ptr<int[]> distance(new int[V]);
-    std::unique_ptr<Path[]> paths(new Path[V]);
-    int * predecessor = new int[V];
+    int predecessor[V];
 
     for (int i = 0; i < V; i++)
         distance[i] = INT32_MAX; // INF
@@ -67,35 +79,16 @@ std::unique_ptr<int[]> BellmanFord(GraphList *graph, int source)
             head_ptr = head_ptr->next;
         }
     }
-    showResults(distance, source, V);
-
-    for (int i = 0; i < V; i++)
-    {
-      int current = i;
-
-      paths[i].cost = distance[i];
-
-      while (current != source)
-      {
-        paths[i].visited_nodes.addNode(current);
-        current = predecessor[current];
-      }
-
-    }
-
-    paths[0].visited_nodes.display();
-
-
-    delete [] predecessor;
+    showResults(distance, predecessor, source, V);
 
     return distance;
 }
+
 
 std::unique_ptr<int[]> BellmanFord(GraphArray *graph, int source)
 {
     int V = graph->getNodesAmount();
     std::unique_ptr<int[]> distance(new int[V]);
-    //std::unique_ptr<Path[]> distance(new Path[V]);
 
     for (int i = 0; i < V; i++)
         distance[i] = INT32_MAX; // INF
@@ -144,7 +137,7 @@ std::unique_ptr<int[]> BellmanFord(GraphArray *graph, int source)
         }
     }
 
-    showResults(distance, source, V);
+    //showResults(distance, source, V);
 
     return distance;
 
