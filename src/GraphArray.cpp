@@ -7,7 +7,13 @@ int ** GraphArray::countPairs(std::unique_ptr<Edge[]> & edges)
 {
     int ** pairs_arr = new int*[nodes_amount];
     for (int i = 0; i < nodes_amount; i++)
-      pairs_arr[i] = new int[nodes_amount];
+    {
+        pairs_arr[i] = new int[nodes_amount];
+    }
+
+    for (int i = 0; i < nodes_amount; i++)
+        for (int j = 0; j < nodes_amount; j++)
+            pairs_arr[i][j] = 1;
 
     int src, dest, counter;
 
@@ -23,7 +29,7 @@ int ** GraphArray::countPairs(std::unique_ptr<Edge[]> & edges)
             if ( src == edges[j].source && dest == edges[j].destination)
               counter++;
 
-      pairs_arr[src][dest] = counter;
+        pairs_arr[src][dest] = counter;
     }
 
     return pairs_arr;
@@ -34,6 +40,8 @@ GraphArray::GraphArray(std::unique_ptr<Edge[]> & edges, int edges_amount, int no
 {
     this->nodes_amount = nodes_amount;
     this->edges_amount = edges_amount;
+
+
 
     //  Get amount of the repeating pairs
     int ** pairs_amount = countPairs(edges);
@@ -47,7 +55,11 @@ GraphArray::GraphArray(std::unique_ptr<Edge[]> & edges, int edges_amount, int no
     //  one int bigger, to mark that last element as the end
     for (int i = 0; i < nodes_amount; i++)
         for (int j = 0; j < nodes_amount; j++)
+        {
+            //std::cout << "SIZE OF ADJ adj_matrix["<<i<<"]["<<j<<"][k]" << pairs_amount[i][j] + 1 << std::endl;
             adj_matrix[i][j] = new int[pairs_amount[i][j] + 1];
+        }
+
 
     //  Fill it with 0's
     for (int i = 0; i < nodes_amount; i++)
@@ -89,25 +101,6 @@ GraphArray::~GraphArray()
 
     delete [] adj_matrix;
 }
-
-/* OUTDATED - THINK OF SOMETHING TO PRINT MATRIX THAT CONTAINS ARRAYS
- * SO IT WON'T LOOK LIKE A TOTAL MESS
-void GraphArray::showAdjMatrix()
-{
-    std::cout << std::endl;
-    std::cout << "ADJACENCY ARRAY:" << std::endl;
-    for (int i = 0; i < nodes_amount; i++)
-    {
-        std::cout << "  ";
-        for (int j = 0; j < nodes_amount; j++)
-        {
-            std::cout << adj_matrix[j][i];
-            std::cout << ", ";
-        }
-        std::cout << std::endl;
-    }
-}
-*/
 
 void GraphArray::showAdjNodes(int i)
 {

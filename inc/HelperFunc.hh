@@ -6,12 +6,17 @@
 #include <ctime>        //  std::time
 #include <cstdlib>      //  std::rand, std::srand
 #include <fstream>      // ofstream, ifstream
-#include "noe.hh"
+#include "GraphList.hh"
+#include "GraphArray.hh"
+#include "BellmanFord.hh"
 
 std::unique_ptr<int[]> getRandNodes(int n);
 
 //  unique_ptr passed by reference, otherwise that passed value would become null
 std::unique_ptr<Edge[]> getRandEdges(std::unique_ptr<int[]> & nodes, int edges_amount, int nodes_amount);
+
+double startPathFindingList(int nodes_amount, int edges_amount);
+double startPathFindingArray(int nodes_amount, int edges_amount);
 
 
 

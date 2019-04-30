@@ -1,7 +1,7 @@
 #include "../inc/BellmanFord.hh"
 
 
-void showResults(std::unique_ptr<int[]> &distance, int * predecessor, int source, int n)
+void showResults(std::unique_ptr<int[]> &distance, std::unique_ptr<int[]> &predecessor, int source, int n)
 {
     std::cout << std::endl;
     std::cout << "Node\t\tDistance from (" << source << ")\t\tPath" << std::endl;
@@ -35,7 +35,7 @@ std::unique_ptr<int[]> BellmanFord(GraphList *graph, int source)
 {
     int V = graph->getNodesAmount();
     std::unique_ptr<int[]> distance(new int[V]);
-    int predecessor[V];
+    std::unique_ptr<int[]> predecessor(new int[V]);
 
     for (int i = 0; i < V; i++)
         distance[i] = INT32_MAX; // INF
@@ -89,6 +89,7 @@ std::unique_ptr<int[]> BellmanFord(GraphArray *graph, int source)
 {
     int V = graph->getNodesAmount();
     std::unique_ptr<int[]> distance(new int[V]);
+    std::unique_ptr<int[]> predecessor(new int[V]);
 
     for (int i = 0; i < V; i++)
         distance[i] = INT32_MAX; // INF
@@ -110,7 +111,11 @@ std::unique_ptr<int[]> BellmanFord(GraphArray *graph, int source)
                     int weight = adj_mat[i][j][k];
 
                     if (distance[src] != INT32_MAX && distance[src] + weight < distance[dest])
+                    {
                         distance[dest] = distance[src] + weight;
+                        predecessor[dest] = src;
+                    }
+
 
                     k++;
                 }
@@ -137,7 +142,7 @@ std::unique_ptr<int[]> BellmanFord(GraphArray *graph, int source)
         }
     }
 
-    //showResults(distance, source, V);
+    showResults(distance, predecessor, source, V);
 
     return distance;
 

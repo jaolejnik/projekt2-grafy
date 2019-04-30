@@ -5,7 +5,7 @@
 #include "GraphArray.hh"
 
 
-void showResults(std::unique_ptr<int[]> &distance, int predecessor[], int source, int n);
+void showResults(std::unique_ptr<int[]> &distance, std::unique_ptr<int[]> &predecessor, int source, int n);
 std::unique_ptr<int[]> BellmanFord(GraphList * graph, int source);
 std::unique_ptr<int[]> BellmanFord(GraphArray * graph, int source);
 

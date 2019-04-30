@@ -22,7 +22,7 @@ std::unique_ptr<Edge[]> getRandEdges(std::unique_ptr<int[]> & nodes, int edges_a
 {
     std::random_device rd;
     std::mt19937 mt(rd());
-    std::uniform_int_distribution<int> distribution(-2, nodes_amount);
+    std::uniform_int_distribution<int> distribution(-3, nodes_amount);
 
     std::unique_ptr<Edge[]> rand_edges(new Edge[edges_amount]);
 
@@ -41,3 +41,32 @@ std::unique_ptr<Edge[]> getRandEdges(std::unique_ptr<int[]> & nodes, int edges_a
 }
 
 
+
+double startPathFindingList(int nodes_amount, int edges_amount)
+{
+    std::unique_ptr<int[]> values_of_nodes = getRandNodes(nodes_amount);
+    std::unique_ptr<Edge[]> edges = getRandEdges(values_of_nodes, edges_amount, nodes_amount);
+
+    GraphList graphL(edges, edges_amount, nodes_amount);
+    //GraphArray graphA(edges, edges_amount, nodes_amount);
+
+    graphL.showGraph();
+    //graphA.showGraph();
+
+    int source = rand() % nodes_amount;
+    BellmanFord(&graphL,source);
+    //BellmanFord(&graphA,source);
+}
+
+double startPathFindingArray(int nodes_amount, int edges_amount)
+{
+    std::unique_ptr<int[]> values_of_nodes = getRandNodes(nodes_amount);
+    std::unique_ptr<Edge[]> edges = getRandEdges(values_of_nodes, edges_amount, nodes_amount);
+
+    GraphArray graphA(edges, edges_amount, nodes_amount);
+
+    graphA.showGraph();
+
+    int source = rand() % nodes_amount;
+    BellmanFord(&graphA,source);
+}
