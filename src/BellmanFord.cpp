@@ -31,7 +31,7 @@ void showResults(std::unique_ptr<int[]> &distance, std::unique_ptr<int[]> &prede
     std::cout << std::endl;
 }
 
-std::unique_ptr<int[]> BellmanFord(GraphList *graph, int source)
+Path BellmanFord(GraphList *graph, int source)
 {
     int V = graph->getNodesAmount();
     std::unique_ptr<int[]> distance(new int[V]);
@@ -81,11 +81,15 @@ std::unique_ptr<int[]> BellmanFord(GraphList *graph, int source)
     }
     showResults(distance, predecessor, source, V);
 
-    return distance;
+    Path paths;
+    paths.distance = move(distance);
+    paths.actual_path = move(predecessor);
+
+    return paths;
 }
 
 
-std::unique_ptr<int[]> BellmanFord(GraphArray *graph, int source)
+Path BellmanFord(GraphArray *graph, int source)
 {
     int V = graph->getNodesAmount();
     std::unique_ptr<int[]> distance(new int[V]);
@@ -144,6 +148,11 @@ std::unique_ptr<int[]> BellmanFord(GraphArray *graph, int source)
 
     showResults(distance, predecessor, source, V);
 
-    return distance;
+    Path paths;
+
+    paths.distance = move(distance);
+    paths.actual_path = move(predecessor);
+
+    return paths;
 
 }
