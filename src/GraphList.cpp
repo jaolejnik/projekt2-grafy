@@ -1,5 +1,6 @@
 #include "../inc/GraphList.hh"
 
+//  Function that creates list of adjacent nodes.
 Node * GraphList::getAdjListNode(int val, int weight, Node * head)
 {
     Node * new_node = new Node;
@@ -10,6 +11,8 @@ Node * GraphList::getAdjListNode(int val, int weight, Node * head)
     return new_node;
 }
 
+
+//  Constructor
 GraphList::GraphList(std::unique_ptr<Edge[]> & edges, int edges_amount, int nodes_amount)
 {
     head = new Node*[nodes_amount];
@@ -19,6 +22,7 @@ GraphList::GraphList(std::unique_ptr<Edge[]> & edges, int edges_amount, int node
     for (int i = 0; i < nodes_amount; i++)
         head[i] = nullptr;
 
+    // This loop is responsible for initializing adjacency list.
     for (int i = 0; i < edges_amount; i++)
     {
         int source = edges[i].source;
@@ -31,7 +35,7 @@ GraphList::GraphList(std::unique_ptr<Edge[]> & edges, int edges_amount, int node
     }
 }
 
-
+//  Destructor
 GraphList::~GraphList()
 {
     for (int i = 0; i < nodes_amount; i++)
@@ -40,7 +44,7 @@ GraphList::~GraphList()
     delete[] head;
 }
 
-
+// Function that displays adjacent nodes of the given node.
 void GraphList::showAdjNodes(int i)
 {
     Node * head_ptr = this->head[i];
@@ -52,7 +56,7 @@ void GraphList::showAdjNodes(int i)
     std::cout << std::endl;
 }
 
-
+// Function that displays adjacent nodes of every node.
 void GraphList::showGraph()
 {
     std::cout << std::endl;

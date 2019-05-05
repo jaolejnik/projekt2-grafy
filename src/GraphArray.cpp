@@ -1,7 +1,7 @@
 #include "../inc/GraphArray.hh"
 
 //  Function that counts repeating paths(multiple paths from A to B),
-//  for sake of allocating just enough space in adjacency array and saves
+//  for sake of allocating just enough space in the adjacency matrix and saves
 //  it as an matrix and returns it.
 int ** GraphArray::countPairs(std::unique_ptr<Edge[]> & edges)
 {
@@ -35,13 +35,12 @@ int ** GraphArray::countPairs(std::unique_ptr<Edge[]> & edges)
     return pairs_arr;
 }
 
+
 // Consrtuctor
 GraphArray::GraphArray(std::unique_ptr<Edge[]> & edges, int edges_amount, int nodes_amount)
 {
     this->nodes_amount = nodes_amount;
     this->edges_amount = edges_amount;
-
-
 
     //  Get amount of the repeating pairs
     int ** pairs_amount = countPairs(edges);
@@ -52,14 +51,13 @@ GraphArray::GraphArray(std::unique_ptr<Edge[]> & edges, int edges_amount, int no
         adj_matrix[i] = new int*[nodes_amount];
 
     //  Create array for the repeating pairs that is
-    //  one int bigger, to mark that last element as the end
+    //  one int bigger, to mark that last element as the end (with 0).
     for (int i = 0; i < nodes_amount; i++)
         for (int j = 0; j < nodes_amount; j++)
         {
             //std::cout << "SIZE OF ADJ adj_matrix["<<i<<"]["<<j<<"][k]" << pairs_amount[i][j] + 1 << std::endl;
             adj_matrix[i][j] = new int[pairs_amount[i][j] + 1];
         }
-
 
     //  Fill it with 0's
     for (int i = 0; i < nodes_amount; i++)
@@ -89,7 +87,8 @@ GraphArray::GraphArray(std::unique_ptr<Edge[]> & edges, int edges_amount, int no
 
 }
 
-// destructor
+
+// Destructor
 GraphArray::~GraphArray()
 {
     for (int i = 0; i < nodes_amount; i++)
@@ -102,6 +101,7 @@ GraphArray::~GraphArray()
     delete [] adj_matrix;
 }
 
+// Function that displays adjacent nodes of the given node.
 void GraphArray::showAdjNodes(int i)
 {
     for (int j = 0; j < nodes_amount; j++)
@@ -117,7 +117,7 @@ void GraphArray::showAdjNodes(int i)
     std::cout << std::endl;
 }
 
-
+// Function that displays adjacent nodes of every node.
 void GraphArray::showGraph()
 {
     std::cout << std::endl;

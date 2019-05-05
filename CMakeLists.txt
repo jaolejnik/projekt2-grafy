@@ -11,4 +11,4 @@ add_executable(Projekt2_Grafy
         src/main.cpp
         src/HelperFunc.cpp
         src/GraphArray.cpp
-        src/GraphList.cpp src/BellmanFord.cpp inc/BellmanFord.hh src/MyList.cpp inc/MyList.hh)
+        src/GraphList.cpp src/BellmanFord.cpp inc/BellmanFord.hh src/fileManagment.cpp inc/fileManagment.hh src/menu.cpp inc/menu.hh)

@@ -1,27 +1,18 @@
-#include "../inc/HelperFunc.hh"
+#include "../inc/menu.hh"
 
 
 using namespace std;
 
 int main()
 {
-    std::srand (unsigned ( std::time(0) ) );
+    char tmp = '.';
 
-    int NODES_AMOUNT[] = {10};//, 50, 100, 250, 500};
-    for (int V: NODES_AMOUNT)
+    while (tmp != 'q')
     {
-        float DENSITY[] = {0.25};//, 0.5, 0.75, 1};
-        for (float D: DENSITY)
-        {
-            int EDGES_AMOUNT = V*(V-1) * D;
-            //  From equation
-            // DENSITY = EDGES / (NODES * (NODES - 1))
-
-            startPathFindingArray(V, EDGES_AMOUNT);
-
-        }
+        showMenu();
+        cin >> tmp;
+        menu(tmp);
     }
-
 
     return 0;
 }
