@@ -1,9 +1,9 @@
-#include "../inc/GraphArray.hh"
+#include "../inc/GraphMatrix.hh"
 
 //  Function that counts repeating paths(multiple paths from A to B),
 //  for sake of allocating just enough space in the adjacency matrix and saves
 //  it as an matrix and returns it.
-int ** GraphArray::countPairs(std::unique_ptr<Edge[]> & edges)
+int ** GraphMatrix::countPairs(std::unique_ptr<Edge[]> & edges)
 {
     int ** pairs_arr = new int*[nodes_amount];
     for (int i = 0; i < nodes_amount; i++)
@@ -37,7 +37,7 @@ int ** GraphArray::countPairs(std::unique_ptr<Edge[]> & edges)
 
 
 // Consrtuctor
-GraphArray::GraphArray(std::unique_ptr<Edge[]> & edges, int edges_amount, int nodes_amount)
+GraphMatrix::GraphMatrix(std::unique_ptr<Edge[]> & edges, int edges_amount, int nodes_amount)
 {
     this->nodes_amount = nodes_amount;
     this->edges_amount = edges_amount;
@@ -54,10 +54,7 @@ GraphArray::GraphArray(std::unique_ptr<Edge[]> & edges, int edges_amount, int no
     //  one int bigger, to mark that last element as the end (with 0).
     for (int i = 0; i < nodes_amount; i++)
         for (int j = 0; j < nodes_amount; j++)
-        {
-            //std::cout << "SIZE OF ADJ adj_matrix["<<i<<"]["<<j<<"][k]" << pairs_amount[i][j] + 1 << std::endl;
             adj_matrix[i][j] = new int[pairs_amount[i][j] + 1];
-        }
 
     //  Fill it with 0's
     for (int i = 0; i < nodes_amount; i++)
@@ -89,7 +86,7 @@ GraphArray::GraphArray(std::unique_ptr<Edge[]> & edges, int edges_amount, int no
 
 
 // Destructor
-GraphArray::~GraphArray()
+GraphMatrix::~GraphMatrix()
 {
     for (int i = 0; i < nodes_amount; i++)
         for (int j = 0; j < nodes_amount; j++)
@@ -102,7 +99,7 @@ GraphArray::~GraphArray()
 }
 
 // Function that displays adjacent nodes of the given node.
-void GraphArray::showAdjNodes(int i)
+void GraphMatrix::showAdjNodes(int i)
 {
     for (int j = 0; j < nodes_amount; j++)
     {
@@ -118,7 +115,7 @@ void GraphArray::showAdjNodes(int i)
 }
 
 // Function that displays adjacent nodes of every node.
-void GraphArray::showGraph()
+void GraphMatrix::showGraph()
 {
     std::cout << std::endl;
     std::cout << "ARRAY:" << std::endl;

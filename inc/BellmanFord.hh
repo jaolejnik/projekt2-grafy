@@ -2,10 +2,10 @@
 #define PROJEKT2_GRAFY_BELLMANFORD_HH
 
 #include "GraphList.hh"
-#include "GraphArray.hh"
+#include "GraphMatrix.hh"
 
 Path BellmanFord(GraphList * graph, int source, bool test);
-Path BellmanFord(GraphArray * graph, int source, bool test);
+Path BellmanFord(GraphMatrix * graph, int source, bool test);
 void showResults(Path * path, int source, int nodes_amount);
 
 template <typename GraphType>

@@ -8,7 +8,7 @@
 #include <chrono>       //  chrono clock
 #include <string>
 #include "GraphList.hh"
-#include "GraphArray.hh"
+#include "GraphMatrix.hh"
 #include "BellmanFord.hh"
 #include "fileManagment.hh"
 

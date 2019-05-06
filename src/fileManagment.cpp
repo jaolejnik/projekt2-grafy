@@ -105,14 +105,14 @@ bool isFull(std::string name)
 }
 
 
-//  Creates graph form the data in the given file and returns it.
+//  Creates a graph form the data in the given file and returns it.
 template <typename GraphType>
 GraphType createGraphFromFile(std::string name, int *source)
 {
     std::ifstream myFile(name);
     if( !myFile.is_open() )    // If it won't open display the error.
     {
-        std::cerr << "Failed to open " << name << std::endl;
+        std::cerr << "Failed to open " << name << "to create a graph from file."<< std::endl;
         exit(EXIT_FAILURE);
     }
 
@@ -139,7 +139,7 @@ GraphType createGraphFromFile(std::string name, int *source)
     return graph;
 }
 
-
+// Saves path to a file of  "results_"+ given name
 bool pathToFile(Path * path, std::string name, int source, int nodes_amount)
 {
     std::ofstream myFile("results_"+name);
@@ -152,6 +152,7 @@ bool pathToFile(Path * path, std::string name, int source, int nodes_amount)
 
     myFile << std::endl;
     myFile << "Node\t\tDistance from (" << source << ")\t\tPath \n";
+    myFile << std::endl;
 
     for (int i = 0; i < nodes_amount; i++)
     {
@@ -185,4 +186,4 @@ bool pathToFile(Path * path, std::string name, int source, int nodes_amount)
 
 template GraphList createGraphFromFile<GraphList>(std::string name, int * source);
 
-template GraphArray createGraphFromFile<GraphArray>(std::string name, int * source);
+template GraphMatrix createGraphFromFile<GraphMatrix>(std::string name, int * source);

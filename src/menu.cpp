@@ -6,12 +6,12 @@ void showMenu()
  std::cout << "Choose what you want to do:" << std::endl;
  std::cout << "---------------------------" << std::endl;
  std::cout << std::endl;
- std::cout << "1 -   Load from file" << std::endl;
- std::cout << "2 -   Efficiency test" << std::endl;
+ std::cout << "1 - Load from file(.txt)" << std::endl;
+ std::cout << "2 - Efficiency test" << std::endl;
  std::cout << std::endl;
- std::cout << "q -   Exit" << std::endl;
+ std::cout << "q - Exit" << std::endl;
  std::cout << std::endl;
- std::cout << "Your choice:";
+ std::cout << "Your choice: ";
 }
 
 void menu(char tmp)

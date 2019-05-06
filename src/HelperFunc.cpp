@@ -99,7 +99,7 @@ void startTest()
     std::string name = "results.csv";
 
     //  Array storing pointers to functions performing efficiency test
-    double (*pf[2])(int, int, float) = { startPathFinding<GraphList>, startPathFinding<GraphArray>};
+    double (*pf[2])(int, int, float) = { startPathFinding<GraphList>, startPathFinding<GraphMatrix>};
     for (auto & find_path : pf)     // For each function
     {
         if ( find_path == &startPathFinding<GraphList>)
@@ -108,7 +108,7 @@ void startTest()
             std::cout << std::endl;
             std::cout << "ADJACENCY LIST" << std::endl;
         }
-        else if ( find_path == &startPathFinding<GraphArray>)
+        else if ( find_path == &startPathFinding<GraphMatrix>)
         {
             name = "matrix_results.csv";
             std::cout << std::endl;
@@ -116,20 +116,21 @@ void startTest()
 
         }
 
-        int NODES_AMOUNT[] = {10, 25, 50, 100, 250};
-        for (int V: NODES_AMOUNT)   //  For each amount of nodes
+        float DENSITY[] = {0.25, 0.5, 0.75, 1};
+        for (float D: DENSITY)  //  For each density
         {
             std::cout << std::endl;
-            std:: cout << "Testing for graph with" << V << " nodes" << std::endl;
-            float DENSITY[] = {0.25, 0.5, 0.75, 1};
-            for (float D: DENSITY)  //  For each density
+            std::cout << "Graph density: " << D <<  std::endl;
+            std::cout << "-----------------" << std::endl;
+
+            int NODES_AMOUNT[] = {10, 25, 50, 100, 250};
+            for (int V: NODES_AMOUNT)   //  For each amount of nodes
             {
+                std:: cout << "> "<< V << " nodes" << std::endl;
+
                 //  From equation
                 // DENSITY = EDGES / (NODES * (NODES - 1))
                 int EDGES_AMOUNT = V*(V-1) * D;
-
-                std::cout << std::endl;
-                std:: cout <<  D << " density" << std::endl;
 
                 for (int i = 0; i < 100; i++)   // perform efficiency test 100 times.
                 {
@@ -148,6 +149,8 @@ void startTest()
 }
 
 
+//  Utility function that loads a data from a file and creates graph, then performs BellmanFord algorithm
+//  and saves results to another file.
 void loadFromFile()
 {
     std::string name;
@@ -155,17 +158,17 @@ void loadFromFile()
 
     std::cout << std::endl;
     std::cout << "Type in the name of the file containing graph data (file must be in this directory):" << std::endl;
-    std::cout << "Name:";
+    std::cout << "Name: ";
     std::cin >> name;
 
-    std::size_t found = name.find(".txt");
-    if (found == std::string::npos)
+    std::size_t found = name.find(".txt");  //  Checking if there is ".txt" in the name
+    if (found == std::string::npos)         //  if not, that's wrong extension
     {
         std::cerr << "Files must be of .txt extension" << std::endl;
         return;
     }
 
-    GraphList graph = createGraphFromFile<GraphList>(name, &source);
+    GraphList graph = createGraphFromFile<GraphList>(name, &source);    // GraphList is used because it's faster
     Path path = BellmanFord(&graph, source, false);
 
     pathToFile(&path, name, source, graph.getNodesAmount());
@@ -187,8 +190,7 @@ double sum_array(double arr[], int size)
 }
 
 
-
 template double startPathFinding<GraphList>(int nodes_amount, int edges_amount, float density);
 
-template double startPathFinding<GraphArray>(int nodes_amount, int edges_amount, float density);
+template double startPathFinding<GraphMatrix>(int nodes_amount, int edges_amount, float density);
 
